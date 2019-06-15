@@ -37,3 +37,46 @@ docker push kislak/myapp_web:prod
 docker service scale myapp_web=3
 
 
+docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token $DIGITAL_OCEAN_TOKEN \
+  --digitalocean-region fra1 \
+  do-manager-1
+
+docker swarm init --advertise-addr 165.22.19.7
+Swarm initialized: current node (a07pyon03y0y3pml2nmdasvff) is now a manager.
+To add a worker to this swarm, run the following command:
+    docker swarm join --token SWMTKN-1-0zozw6nke2o2zotlf4mtc9ch66snfgf60cssayul6uq3joi8cb-bze5au4caw32bpbahzwbzk84q 165.22.19.7:2377
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token $DIGITAL_OCEAN_TOKEN \
+  --digitalocean-region fra1 \
+  do-worker-1
+
+
+docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token $DIGITAL_OCEAN_TOKEN \
+  --digitalocean-region fra1 \
+  do-worker-2
+
+-----
+SWARM_TOKEN="SWMTKN-1-0zozw6nke2o2zotlf4mtc9ch66snfgf60cssayul6uq3joi8cb-bze5au4caw32bpbahzwbzk84q"
+MANAGER_IP=165.22.19.7
+docker-machine ssh do-worker-1 \
+  "docker swarm join --token $SWARM_TOKEN $MANAGER_IP:2377"
+----
+SWARM_TOKEN="SWMTKN-1-0zozw6nke2o2zotlf4mtc9ch66snfgf60cssayul6uq3joi8cb-bze5au4caw32bpbahzwbzk84q"
+MANAGER_IP=165.22.19.7
+docker-machine ssh do-worker-2 \
+  "docker swarm join --token $SWARM_TOKEN $MANAGER_IP:2377"
+
+eval $(docker-machine env do-manager-1)
+
+docker stack deploy -c docker-stack.yml myapp
+docker-machine ls
+
+​​docker-machine​​ ​​stop​​
+​​docker-machine​​ ​​rm
