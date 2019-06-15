@@ -5,5 +5,6 @@ class WelcomeController < ApplicationController
     redis.incr :page_hits
 
     @page_hits = redis.get(:page_hits)
+    @hostname = Socket.gethostname
   end
 end

@@ -5,3 +5,35 @@ docker build -f Dockerfile.prod -t kislak/myapp_web:prod .
 docker login
 docker push kislak/myapp_web:prod
 
+ch 13
+docker-machine create --driver virtualbox local-vm-1
+docker-machine ls
+docker-machine ssh local-vm-1
+docker-machine ssh local-vm-1 "echo 'hello'"
+
+docker-machine env local-vm-1
+# Run this command to configure your shell:
+
+docker swarm init --advertise-addr <ip addr>
+
+eval $(docker-machine env local-vm-1)
+docker stack deploy -c docker-stack.yml myapp
+or
+docker service update --image kislak/myapp_web:prod myapp_web
+
+docker-machine ls
+docker stack services myapp
+docker stack rm myapp
+docker stack ps myapp
+
+How do we make our app resilient to failures?
+How can we scale our application to handle varying load?
+How do we deploy new versions of our application with no (or minimal) downtime for users?
+
+eval $(docker-machine env -u)
+docker build -f Dockerfile.prod -t kislak/myapp_web:prod .
+docker push kislak/myapp_web:prod
+
+docker service scale myapp_web=3
+
+
