@@ -1,0 +1,7 @@
+gcloud​​ ​​container​​ ​​clusters​​ ​​create​​ ​​guestbook​​ ​​--num-nodes=3​
+
+dockerhub.com vs Google Cloud Container Registry
+docker build -f Dockerfile.prod -t kislak/myapp_web:prod .
+docker login
+docker push kislak/myapp_web:prod
+

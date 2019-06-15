@@ -1,0 +1,11 @@
+DATABASE_HOST=database
+RAILS_ENV=production
+
+# docker-compose​​ ​​exec​​ ​​web​​ ​​bin/rails​​ ​​secret​
+SECRET_KEY_BASE=377500b39849662e2afe4be82d91d874bdf423034590b7161b1a96047e6d530f1bf48bc235502a90a55a20df8aa55b727733fb27e38d6740711d37eeacec03c2
+
+# logs/<environment>.log
+RAILS_LOG_TO_STDOUT=true
+
+# bin/rails assets:precompile
+RAILS_SERVE_STATIC_FILES=true
