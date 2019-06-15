@@ -80,3 +80,17 @@ docker-machine ls
 
 ​​docker-machine​​ ​​stop​​
 ​​docker-machine​​ ​​rm
+
+
+also:
+deploy:
+  resources:
+    limits:
+      cpus: "0.1"
+      memory: 200M
+  restart_policy:
+    condition: on-failure
+
+autoscale
+sticky session
+Docker secrets
